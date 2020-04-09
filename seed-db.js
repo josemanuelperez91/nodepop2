@@ -6,19 +6,19 @@ database.once('open', async () => {
     await Advert.deleteMany();
     await Advert.insertMany([
       {
-        name: 'Ad for selling 1',
+        name: 'Ad for sale 1',
         price: 100,
-        sell: true,
+        sale: true,
         image: '/images/samplead1.png',
-        tags: ['work', 'lifestyle', 'motor', 'mobile']
+        tags: ['work', 'lifestyle'],
       },
       {
-        name: 'Ad for buying 1',
+        name: 'Ad for purchase 1',
         price: 150,
-        sell: false,
+        sale: false,
         image: '/images/samplead1.png',
-        tags: []
-      }
+        tags: ['motor', 'work'],
+      },
     ]);
     console.log('Seeding success');
     database.close();

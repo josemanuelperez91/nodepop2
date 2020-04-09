@@ -5,26 +5,27 @@ const Advert = require('../../models/Advert');
 
 router.get('/', async (req, res, next) => {
   try {
-    // const name = req.query.name;
-    // const age = req.query.age;
-    // const limit = parseInt(req.query.limit || 10000);
-    // const skip = parseInt(req.query.skip);
-    // const sort = req.query.sort;
-    // const fields = req.query.fields;
+    const { tag, sale, name, price, skip, limit, sort } = req.query;
 
-    // const filtro = {};
+    const filter = {};
+    typeof tag !== 'undefined' && (filter.tag = tag);
+    typeof sale !== 'undefined' && (filter.sale = sale === 'true');
+    const search = { name, price };
+    const pagination = { skip, limit };
 
-    // if (typeof name !== 'undefined') {
-    //   filtro.name = name;
-    // }
-
-    // if (typeof age !== 'undefined') {
-    //   filtro.age = age;
-    // }
-
-    // const docs = await Advert.queryDocs(filter, limit, skip, sort, fields);
-    const docs = await Advert.queryDocs();
+    const docs = await Advert.queryDocs(filter, search, pagination, sort);
     res.json(docs);
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.post('/', async (req, res, next) => {
+  try {
+    const advertData = req.body;
+    const advertModel = new Advert(advertData);
+    const storedAdvert = await advertModel.save();
+    res.status(201).json({ result: storedAdvert });
   } catch (err) {
     next(err);
   }

@@ -2,10 +2,55 @@
 <html>
   <head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
   </head>
   <body>
     <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+
+    <div class="advert-grid">
+      <% adverts.forEach(advert => { %>
+
+      <div class="advert-card">
+        <img src="<%= advert.image ? advert.image : "/images/emptyad1.png" %>"
+        alt="<% advert.name %>" />
+        <div class="advert-card-info">
+          <h5><%= advert.sale ? 'Sale' : 'Purchase' %></h5>
+          <h3><%= advert.name %> · <%= advert.price %> €</h3>
+          <ul>
+            <% advert.tags.map(tag => { %>
+            <li><%= tag %></li>
+            <% }) %>
+          </ul>
+        </div>
+      </div>
+      <% }) %>
+    </div>
   </body>
+
+  <script>
+    const requestURL = 'http://localhost:3000/api/adverts';
+
+    window.onload = function () {
+      fetch(requestURL, {
+        method: 'GET',
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`API Error`);
+          }
+          return response.json();
+        })
+        .then((result) => {
+          let advertsHTML = '';
+          result.map((ad) => {
+            advertsHTML += `<li>${ad.name}</li>`;
+          });
+          document.querySelector('ul').innerHTML = advertsHTML;
+        })
+        .catch((err) => {
+          console.error(err.message);
+          throw err;
+        });
+    };
+  </script>
 </html>

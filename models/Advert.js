@@ -3,26 +3,35 @@ const mongoose = require('mongoose');
 const advertSchema = mongoose.Schema({
   name: String,
   price: Number,
-  sell: Boolean,
+  sale: Boolean,
   image: String,
-  tags: [String]
+  tags: [String],
 });
 
-// advertSchema.statics.queryDocs = function(filter, limit, skip, sort, fields) {
-//   const query = this.find(filter);
-//   query.limit(limit);
-//   query.skip(skip);
-//   query.sort(sort);
-//   query.select(fields);
-//   return query.exec();
-// };
-advertSchema.statics.queryDocs = function() {
-  // const query = this.find(filter);
-  // query.limit(limit);
-  // query.skip(skip);
-  // query.sort(sort);
-  // query.select(fields);
-  return this.find();
+advertSchema.statics.queryDocs = function (filter, search, pagination, sort) {
+  const query = this.find(filter);
+
+  search.name && query.regex('name', new RegExp(`^${search.name}`, 'i'));
+
+  if (search.price) {
+    const priceArray = search.price.split('-');
+    query.where('price');
+    if (priceArray[0]) {
+      query.gte(parseInt(priceArray[0]));
+    }
+    if (priceArray[1]) {
+      query.lte(parseInt(priceArray[1]));
+    }
+  }
+  pagination.skip && query.skip(parseInt(pagination.skip));
+  pagination.limit && query.limit(parseInt(pagination.limit));
+  sort && query.sort(sort);
+
+  return query.exec();
+};
+advertSchema.statics.queryTags = function () {
+  const query = this.find().distinct('tags');
+  return query.exec();
 };
 const Advert = mongoose.model('Advert', advertSchema);
 
