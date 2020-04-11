@@ -1,7 +1,9 @@
-# WEB-API/Node.js/MongoDB: Nodepop
+# WEB-API/Nodejs/MongoDB: Nodepop
 
-This application requires [nodejs (12.14.1 or latest)](https://nodejs.org/en/download/)
-and [mongoDB (4.2.3 or latest)](https://www.mongodb.com/download-center)
+_A WEB-API to store and show advertisements of second-hand goods._
+
+This Express application requires [nodejs (12.14.1 or later)](https://nodejs.org/en/download/)
+and [mongoDB (4.2.3 or later)](https://www.mongodb.com/download-center)
 to run locally.
 
 ## Download
@@ -12,335 +14,180 @@ Copy or clone this application using Git with:
 
 ## Install
 
-Inside the root folder, use NPM to deploy
+Inside the root folder, use NPM to install the required and development dependecies:
 
-    bundle install
+    cd nodepop
+    npm install
 
-## Run the app
+## Development
 
-    unicorn -p 7000
+This project uses eslint in order to mantain a consistent code. To run a global check you can use the following NPM script
 
-## Run the tests
+    npm run lint-project -s
 
-    ./run-tests.sh
+To use lint in a specific file, you can use NPX
 
-# REST API
+    npx eslint [filename]
 
-The REST API to the example app is described below.
+Or directly:
 
-## Get list of Things
+    .\node_modules\.bin\eslint [filename]
 
-### Request
+## Run the App
 
-`GET /thing/`
+For running in production mode, execute the script:
 
-    curl -i -H 'Accept: application/json' http://localhost:7000/thing/
+    npm run start
 
-### Response
+For development mode, execute:
 
-    HTTP/1.1 200 OK
-    Date: Thu, 24 Feb 2011 12:36:30 GMT
+    npm run dev
+
+Make sure your MongoDB service is up and ready.
+
+## Getting started
+
+You can use the following script to generate sample data:
+
+    npm run seed-db
+
+This will also generate the database and collection structure used in this application.
+
+Now you can access trough a browser to a basic home page with an styled sign of the app data.
+By default, in development mode, you will find it at <http://localhost:3000>.
+
+## API
+
+This documentation will help you interact with the Nodepop API. The list of possible
+queries are listed below:
+
+### Get list of advertisements
+
+#### Request
+
+`GET /api/adverts`
+
+#### Query keys and values
+
+- **name** (String): searchs for advertisements with a name that starts with the given value.
+- **price** (Number-Number): searchs for advertisements with a price between two given numbers, separated by -. It is possible to ommit one number to not limit the search by its side.
+- **tag** (String): searchs for any advertisement that has the given tag name inside its list of tags.
+- **sale** (true or false): searchs for advertisements for sale if true is given, or advertisements for purchase if false is given.
+
+#### Query keys and values for navigation
+
+- **skip** (Integer): filters the list of advertisements skipping the given number of data 'rows'.
+- **limit** (Integer): filters the list of advertisements stopping after the given number is reached.
+
+#### Query key and value for sorting
+
+- **sort** (String): returns advertisements ordered using the specified data 'column'.
+
+#### Sample Request Query
+
+    /api/adverts/?name=Ad&price=-150&tag=work&sale=true&skip=0&limit=1&sort=name
+
+#### Sample Response
+
     Status: 200 OK
-    Connection: close
-    Content-Type: application/json
-    Content-Length: 2
+    Content-Type: application/json; charset=utf-8
 
-    []
+    [
+        {
+            "tags": [
+                "work",
+                "lifestyle"
+            ],
+            "_id": "5e9206a172b1371c78762ecd",
+            "name": "Ad for sale 1",
+            "price": 100,
+            "sale": true,
+            "image": "/images/samplead1.png",
+            "__v": 0
+        }
+    ]
 
-## Create a new Thing
+### Get list of tags
 
-### Request
+#### Request
 
-`POST /thing/`
+This request will retrieve every tag used in the stored advertisements, without duplications.
 
-    curl -i -H 'Accept: application/json' -d 'name=Foo&status=new' http://localhost:7000/thing
+`GET /api/tags`
 
-### Response
+#### Sample Response
 
-    HTTP/1.1 201 Created
-    Date: Thu, 24 Feb 2011 12:36:30 GMT
+    Status: 200 OK
+    Content-Type: application/json; charset=utf-8
+
+    [
+    "lifestyle",
+    "motor",
+    "work"
+    ]
+
+### Creating Advertisement
+
+#### Request
+
+`POST /api/adverts/`
+
+#### Valid keys and data types (x-www-form-urlencoded)
+
+- **name** (String)
+- **price** (Number)
+- **tag** (String, Multiple)
+- **sale** (true or false)
+- **image** (String, URL)
+
+#### Sample Request
+
+    POST /api/adverts HTTP/1.1
+    Content-Type: application/x-www-form-urlencoded
+    name=New Ad 3&price=200&sale=true&tag=work&tag=lifestyle
+
+#### Sample Response
+
     Status: 201 Created
-    Connection: close
     Content-Type: application/json
-    Location: /thing/1
-    Content-Length: 36
 
-    {"id":1,"name":"Foo","status":"new"}
+    {
+        "result": {
+            "tags": [
+                "work",
+                "lifestyle"
+            ],
+            "_id": "5e9230d1d721c82f94c34189",
+            "name": "New Ad 3",
+            "price": 200,
+            "sale": true,
+            "__v": 0
+        }
+    }
 
-## Get a specific Thing
+#### Error Responses
 
-### Request
+In case something goes wrong, you can expect some of these errors
 
-`GET /thing/id`
+### Invalid parameter response
 
-    curl -i -H 'Accept: application/json' http://localhost:7000/thing/1
-
-### Response
-
-    HTTP/1.1 200 OK
-    Date: Thu, 24 Feb 2011 12:36:30 GMT
-    Status: 200 OK
-    Connection: close
+    Status: 422 Unprocessable Entity
     Content-Type: application/json
-    Content-Length: 36
 
-    {"id":1,"name":"Foo","status":"new"}
+    {
+        "err": {
+        "value": "[given value]",
+        "msg": "Invalid ...",
+        "param": "[key]",
+        "location": ["query" | "body"]
+        }
+    }
 
-## Get a non-existent Thing
+### Invalid URL response
 
-### Request
-
-`GET /thing/id`
-
-    curl -i -H 'Accept: application/json' http://localhost:7000/thing/9999
-
-### Response
-
-    HTTP/1.1 404 Not Found
-    Date: Thu, 24 Feb 2011 12:36:30 GMT
     Status: 404 Not Found
-    Connection: close
     Content-Type: application/json
-    Content-Length: 35
 
-    {"status":404,"reason":"Not found"}
-
-## Create another new Thing
-
-### Request
-
-`POST /thing/`
-
-    curl -i -H 'Accept: application/json' -d 'name=Bar&junk=rubbish' http://localhost:7000/thing
-
-### Response
-
-    HTTP/1.1 201 Created
-    Date: Thu, 24 Feb 2011 12:36:31 GMT
-    Status: 201 Created
-    Connection: close
-    Content-Type: application/json
-    Location: /thing/2
-    Content-Length: 35
-
-    {"id":2,"name":"Bar","status":null}
-
-## Get list of Things again
-
-### Request
-
-`GET /thing/`
-
-    curl -i -H 'Accept: application/json' http://localhost:7000/thing/
-
-### Response
-
-    HTTP/1.1 200 OK
-    Date: Thu, 24 Feb 2011 12:36:31 GMT
-    Status: 200 OK
-    Connection: close
-    Content-Type: application/json
-    Content-Length: 74
-
-    [{"id":1,"name":"Foo","status":"new"},{"id":2,"name":"Bar","status":null}]
-
-## Change a Thing's state
-
-### Request
-
-`PUT /thing/:id/status/changed`
-
-    curl -i -H 'Accept: application/json' -X PUT http://localhost:7000/thing/1/status/changed
-
-### Response
-
-    HTTP/1.1 200 OK
-    Date: Thu, 24 Feb 2011 12:36:31 GMT
-    Status: 200 OK
-    Connection: close
-    Content-Type: application/json
-    Content-Length: 40
-
-    {"id":1,"name":"Foo","status":"changed"}
-
-## Get changed Thing
-
-### Request
-
-`GET /thing/id`
-
-    curl -i -H 'Accept: application/json' http://localhost:7000/thing/1
-
-### Response
-
-    HTTP/1.1 200 OK
-    Date: Thu, 24 Feb 2011 12:36:31 GMT
-    Status: 200 OK
-    Connection: close
-    Content-Type: application/json
-    Content-Length: 40
-
-    {"id":1,"name":"Foo","status":"changed"}
-
-## Change a Thing
-
-### Request
-
-`PUT /thing/:id`
-
-    curl -i -H 'Accept: application/json' -X PUT -d 'name=Foo&status=changed2' http://localhost:7000/thing/1
-
-### Response
-
-    HTTP/1.1 200 OK
-    Date: Thu, 24 Feb 2011 12:36:31 GMT
-    Status: 200 OK
-    Connection: close
-    Content-Type: application/json
-    Content-Length: 41
-
-    {"id":1,"name":"Foo","status":"changed2"}
-
-## Attempt to change a Thing using partial params
-
-### Request
-
-`PUT /thing/:id`
-
-    curl -i -H 'Accept: application/json' -X PUT -d 'status=changed3' http://localhost:7000/thing/1
-
-### Response
-
-    HTTP/1.1 200 OK
-    Date: Thu, 24 Feb 2011 12:36:32 GMT
-    Status: 200 OK
-    Connection: close
-    Content-Type: application/json
-    Content-Length: 41
-
-    {"id":1,"name":"Foo","status":"changed3"}
-
-## Attempt to change a Thing using invalid params
-
-### Request
-
-`PUT /thing/:id`
-
-    curl -i -H 'Accept: application/json' -X PUT -d 'id=99&status=changed4' http://localhost:7000/thing/1
-
-### Response
-
-    HTTP/1.1 200 OK
-    Date: Thu, 24 Feb 2011 12:36:32 GMT
-    Status: 200 OK
-    Connection: close
-    Content-Type: application/json
-    Content-Length: 41
-
-    {"id":1,"name":"Foo","status":"changed4"}
-
-## Change a Thing using the \_method hack
-
-### Request
-
-`POST /thing/:id?_method=POST`
-
-    curl -i -H 'Accept: application/json' -X POST -d 'name=Baz&_method=PUT' http://localhost:7000/thing/1
-
-### Response
-
-    HTTP/1.1 200 OK
-    Date: Thu, 24 Feb 2011 12:36:32 GMT
-    Status: 200 OK
-    Connection: close
-    Content-Type: application/json
-    Content-Length: 41
-
-    {"id":1,"name":"Baz","status":"changed4"}
-
-## Change a Thing using the \_method hack in the url
-
-### Request
-
-`POST /thing/:id?_method=POST`
-
-    curl -i -H 'Accept: application/json' -X POST -d 'name=Qux' http://localhost:7000/thing/1?_method=PUT
-
-### Response
-
-    HTTP/1.1 404 Not Found
-    Date: Thu, 24 Feb 2011 12:36:32 GMT
-    Status: 404 Not Found
-    Connection: close
-    Content-Type: text/html;charset=utf-8
-    Content-Length: 35
-
-    {"status":404,"reason":"Not found"}
-
-## Delete a Thing
-
-### Request
-
-`DELETE /thing/id`
-
-    curl -i -H 'Accept: application/json' -X DELETE http://localhost:7000/thing/1/
-
-### Response
-
-    HTTP/1.1 204 No Content
-    Date: Thu, 24 Feb 2011 12:36:32 GMT
-    Status: 204 No Content
-    Connection: close
-
-## Try to delete same Thing again
-
-### Request
-
-`DELETE /thing/id`
-
-    curl -i -H 'Accept: application/json' -X DELETE http://localhost:7000/thing/1/
-
-### Response
-
-    HTTP/1.1 404 Not Found
-    Date: Thu, 24 Feb 2011 12:36:32 GMT
-    Status: 404 Not Found
-    Connection: close
-    Content-Type: application/json
-    Content-Length: 35
-
-    {"status":404,"reason":"Not found"}
-
-## Get deleted Thing
-
-### Request
-
-`GET /thing/1`
-
-    curl -i -H 'Accept: application/json' http://localhost:7000/thing/1
-
-### Response
-
-    HTTP/1.1 404 Not Found
-    Date: Thu, 24 Feb 2011 12:36:33 GMT
-    Status: 404 Not Found
-    Connection: close
-    Content-Type: application/json
-    Content-Length: 35
-
-    {"status":404,"reason":"Not found"}
-
-## Delete a Thing using the \_method hack
-
-### Request
-
-`DELETE /thing/id`
-
-    curl -i -H 'Accept: application/json' -X POST -d'_method=DELETE' http://localhost:7000/thing/2/
-
-### Response
-
-    HTTP/1.1 204 No Content
-    Date: Thu, 24 Feb 2011 12:36:33 GMT
-    Status: 204 No Content
-    Connection: close
+    {
+        "error": "Not Found"
+    }

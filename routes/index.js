@@ -4,14 +4,16 @@ const Advert = require('../models/Advert');
 router.get('/', async function (req, res, next) {
   res.locals.title = 'NodePop';
 
-  const sort = 'name';
-  const pagination = {
-    skip: 0,
-    limit: 10,
-  };
-
   try {
-    const docs = await Advert.queryDocs({}, {}, pagination, sort);
+    const { tag, sale, name, price, skip, limit, sort } = req.query;
+
+    const filter = {};
+    typeof tag !== 'undefined' && (filter.tag = tag);
+    typeof sale !== 'undefined' && (filter.sale = sale === 'true');
+    const search = { name, price };
+    const pagination = { skip, limit };
+
+    const docs = await Advert.queryDocs(filter, search, pagination, sort);
     res.locals.adverts = docs;
   } catch (err) {
     next(err);

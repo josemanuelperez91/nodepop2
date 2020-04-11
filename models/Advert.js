@@ -16,16 +16,13 @@ advertSchema.statics.queryDocs = function (filter, search, pagination, sort) {
   if (search.price) {
     const priceArray = search.price.split('-');
     query.where('price');
-    if (priceArray[0]) {
-      query.gte(parseInt(priceArray[0]));
-    }
-    if (priceArray[1]) {
-      query.lte(parseInt(priceArray[1]));
-    }
+
+    priceArray[0] && query.gte(parseFloat(priceArray[0]));
+    priceArray[1] && query.lte(parseFloat(priceArray[1]));
   }
   pagination.skip && query.skip(parseInt(pagination.skip));
   pagination.limit && query.limit(parseInt(pagination.limit));
-  //sort && query.sort(sort);
+  sort && query.sort(sort);
 
   return query.exec();
 };
