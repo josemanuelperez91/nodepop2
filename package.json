@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node --use_strict ./bin/www",
     "dev": "cross-env DEBUG=nodeapi:* NODE_ENV=development nodemon -q --use_strict ./bin/www",
-    "seed-db": "node --use_strict seed-db.js"
+    "seed-db": "node --use_strict seed-db.js",
+    "lint-project": "eslint --ignore-path .gitignore ."
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -16,5 +17,8 @@
     "http-errors": "^1.6.3",
     "mongoose": "^5.9.4",
     "morgan": "~1.9.1"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0"
   }
 }

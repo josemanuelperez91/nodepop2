@@ -20,12 +20,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(require('./routes'));
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res) {
   if (err.name === 'ValidationError') {
     err.status = 422;
     const errInfo = err.array({ onlyFirstError: true })[0];

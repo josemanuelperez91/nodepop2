@@ -1,0 +1,28 @@
+{
+  "env": {
+    "commonjs": true,
+    "es6": true,
+    "node": true
+  },
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "parserOptions": {
+    "ecmaVersion": 2018
+  },
+  "rules": {
+    "semi": ["error", "always"],
+    "quotes": ["error", "single"],
+    "no-undefined": "error",
+    "handle-callback-err": "error",
+    "no-irregular-whitespace": "error",
+    "no-mixed-spaces-and-tabs": "error",
+    "no-const-assign": "error",
+    "no-empty": "error",
+    "no-invalid-regexp": "error",
+    "no-unused-vars": "error",
+    "no-useless-catch": "error",
+    "no-extra-semi": "error"
+  }
+}

@@ -25,7 +25,7 @@ advertSchema.statics.queryDocs = function (filter, search, pagination, sort) {
   }
   pagination.skip && query.skip(parseInt(pagination.skip));
   pagination.limit && query.limit(parseInt(pagination.limit));
-  sort && query.sort(sort);
+  //sort && query.sort(sort);
 
   return query.exec();
 };
