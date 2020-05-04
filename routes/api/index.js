@@ -1,6 +1,9 @@
 var router = require('express').Router();
 
-router.use('/adverts', require('./adverts'));
+const jwtAuth = require('../../lib/jwtAuth');
+
+router.use('/adverts', jwtAuth(), require('./adverts'));
 router.use('/tags', require('./tags'));
+router.use('/authenticate', require('./login'));
 
 module.exports = router;

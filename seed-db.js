@@ -1,5 +1,8 @@
+require('dotenv').config();
+
 const database = require('./lib/database');
 const Advert = require('./models/Advert');
+const User = require('./models/User');
 
 database.once('open', async () => {
   try {
@@ -20,6 +23,15 @@ database.once('open', async () => {
         tags: ['motor', 'work'],
       },
     ]);
+
+    await User.deleteMany();
+    await User.insertMany([
+      {
+        email: 'user@example.com',
+        password: await User.hashPassword('1234'),
+      },
+    ]);
+
     console.log('Seeding success');
     database.close();
   } catch (connectionError) {
