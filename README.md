@@ -61,7 +61,7 @@ By default, in development mode, you will find it at <http://localhost:3000>.
 This documentation will help you interact with the Nodepop API. The list of possible
 queries are listed below:
 
-### <a name="some-id"></a>Authenticate the App
+### <a name="auth"></a>Authenticate the App
 
 #### Request
 
