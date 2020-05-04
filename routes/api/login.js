@@ -21,7 +21,7 @@ router.post('/', check('email').isEmail(), async (req, res, next) => {
     }
 
     const token = jwt.sign({ _id: foundUser._id }, process.env.JWT_SECRET, {
-      expiresIn: '12h',
+      expiresIn: process.env.JWT_EXPIRATION_TIME,
     });
 
     res.json({ token: token });
