@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
 const advertSchema = mongoose.Schema({
-  name: String,
-  price: Number,
-  sale: Boolean,
+  name: { type: String, index: true },
+  price: { type: Number, index: true },
+  sale: { type: Boolean, index: true },
   image: String,
-  tags: [String],
+  tags: { type: [String], index: true },
 });
 
 advertSchema.statics.queryDocs = function (filter, search, pagination, sort) {

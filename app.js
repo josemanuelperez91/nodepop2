@@ -32,11 +32,18 @@ app.use(function (err, req, res, next) {
       .json({ error: err.array({ onlyFirstError: true })[0] });
   }
   // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   res.status(err.status || 500);
-  res.json({ error: err.message });
+
+  if (err.status && err.status >= 500) console.error(err);
+
+  if (req.originalUrl.indexOf('/api') === 0) {
+    res.json({ success: false, error: err.message });
+    return;
+  }
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  res.render('error');
 });
 
 module.exports = app;
