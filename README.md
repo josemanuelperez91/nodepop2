@@ -61,7 +61,33 @@ By default, in development mode, you will find it at <http://localhost:3000>.
 This documentation will help you interact with the Nodepop API. The list of possible
 queries are listed below:
 
-### Get list of advertisements
+### <a name="some-id"></a>Authenticate the App
+
+#### Request
+
+`POST /api/authenticate`
+
+#### Query keys and values
+
+- **email** (String): unique email from the user.
+- **password** (String): private password from the user.
+
+#### Sample Request
+
+    POST /api/authenticate HTTP/1.1
+    Content-Type: application/x-www-form-urlencoded
+    email=user@example.com&password=1234
+
+#### Sample Response
+
+    Status: 200 OK
+    Content-Type: application/json; charset=utf-8
+
+    {
+        "token": "eyJhbGciOi...kpXVCJ9.eyJfaWQi...2MTg1MDcs....2MTcwN30.wyxqcbD..."
+    }
+
+### Get list of advertisements (requires authentication)
 
 #### Request
 
@@ -73,6 +99,7 @@ queries are listed below:
 - **price** (Number-Number): searchs for advertisements with a price between two given numbers, separated by -. It is possible to ommit one number to not limit the search by its side.
 - **tag** (String): searchs for any advertisement that has the given tag name inside its list of tags.
 - **sale** (true or false): searchs for advertisements for sale if true is given, or advertisements for purchase if false is given.
+- **token** (String): a valid json web token provided previously by the app, required in order to access the API data. Check: [Authenticate the App](#auth)
 
 #### Query keys and values for navigation
 
@@ -126,7 +153,7 @@ This request will retrieve every tag used in the stored advertisements, without 
     "work"
     ]
 
-### Creating Advertisement
+### Creating Advertisement (requires authentication)
 
 #### Request
 
@@ -139,6 +166,7 @@ This request will retrieve every tag used in the stored advertisements, without 
 - **tag** (String, Multiple)
 - **sale** (true or false)
 - **image** (String, URL)
+- **token** (String): a valid json web token provided previously by the app, required in order to post data to the API. Check: [Authenticate the App](#auth)
 
 #### Sample Request
 
