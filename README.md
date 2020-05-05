@@ -99,7 +99,7 @@ queries are listed below:
 - **price** (Number-Number): searchs for advertisements with a price between two given numbers, separated by -. It is possible to ommit one number to not limit the search by its side.
 - **tag** (String): searchs for any advertisement that has the given tag name inside its list of tags.
 - **sale** (true or false): searchs for advertisements for sale if true is given, or advertisements for purchase if false is given.
-- **token** (String): a valid json web token provided previously by the app, required in order to access the API data. Check: [Authenticate the App](#auth)
+- **token** (String): a valid json web token provided previously by the app, required in order to access the API data. Check: [Authenticate the App](#auth). Can also be send on the Authorization header
 
 #### Query keys and values for navigation
 
@@ -166,7 +166,7 @@ This request will retrieve every tag used in the stored advertisements, without 
 - **tag** (String, Multiple)
 - **sale** (true or false)
 - **image** (String, URL)
-- **token** (String): a valid json web token provided previously by the app, required in order to post data to the API. Check: [Authenticate the App](#auth)
+- **token** (String): a valid json web token provided previously by the app, required in order to post data to the API. Check: [Authenticate the App](#auth).Can also be send on the Authorization header
 
 #### Sample Request
 

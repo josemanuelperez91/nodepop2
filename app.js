@@ -5,6 +5,9 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var app = express();
 
+const i18nConfig = require('./lib/i18nConfig')();
+app.use(i18nConfig.init);
+
 require('./lib/database');
 
 // view engine setup

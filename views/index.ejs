@@ -6,6 +6,7 @@
   </head>
   <body>
     <h1><%= title %></h1>
+    <h2><%= __('Post your ads') %></h2>
 
     <div class="advert-grid">
       <% adverts.forEach(advert => { %>
@@ -25,32 +26,16 @@
       </div>
       <% }) %>
     </div>
+    <footer>
+      <ul>
+        <% getLocales().forEach( locale => { %>
+        <li>
+          <a href="/?lang=<%= locale %>"
+            ><%= __({phrase: 'locale_name', locale: locale}) %></a
+          >
+        </li>
+        <% }) %>
+      </ul>
+    </footer>
   </body>
-
-  <script>
-    const requestURL = 'http://localhost:3000/api/adverts';
-
-    window.onload = function () {
-      fetch(requestURL, {
-        method: 'GET',
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(`API Error`);
-          }
-          return response.json();
-        })
-        .then((result) => {
-          let advertsHTML = '';
-          result.map((ad) => {
-            advertsHTML += `<li>${ad.name}</li>`;
-          });
-          document.querySelector('ul').innerHTML = advertsHTML;
-        })
-        .catch((err) => {
-          console.error(err.message);
-          throw err;
-        });
-    };
-  </script>
 </html>
