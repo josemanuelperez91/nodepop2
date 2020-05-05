@@ -4,10 +4,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var app = express();
-
-const i18nConfig = require('./lib/i18nConfig')();
+app.use(cookieParser());
+const i18nConfig = require('./i18nConfig')('en', 'lang');
 app.use(i18nConfig.init);
-
 require('./lib/database');
 
 // view engine setup
@@ -17,7 +16,6 @@ app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(require('./routes'));

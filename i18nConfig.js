@@ -1,14 +1,14 @@
 const i18n = require('i18n');
 
-const i18nConfig = function () {
+const i18nConfig = function (defaultLocale, cookieName) {
   i18n.configure({
     locales: ['en', 'es'],
     directory: __dirname + '/locales',
-    defaultLocale: 'en',
+    defaultLocale: defaultLocale,
     autoReload: true,
     syncFiles: true,
+    cookie: cookieName,
   });
-  i18n.setLocale('en');
   return i18n;
 };
 

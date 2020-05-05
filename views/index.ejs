@@ -15,8 +15,12 @@
         <img src="<%= advert.image ? advert.image : "/images/emptyad1.png" %>"
         alt="<% advert.name %>" />
         <div class="advert-card-info">
-          <h5><%= advert.sale ? 'Sale' : 'Purchase' %></h5>
-          <h3><%= advert.name %> · <%= advert.price %> €</h3>
+          <h5>
+            <%= __('Type') %>: <%= advert.sale ? __('Sale') : __('Purchase') %>
+          </h5>
+          <h3><%= __('Name') %>: <%= advert.name %></h3>
+          <h3><%= __('Price: {{ price }} coin',advert) %></h3>
+          <h3><%= __n('Tags', advert.tags.length) %></h3>
           <ul>
             <% advert.tags.map(tag => { %>
             <li><%= tag %></li>

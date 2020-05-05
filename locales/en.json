@@ -1,0 +1,13 @@
+{
+  "locale_name": "English",
+  "Post your ads": "Post your ads",
+  "Type": "Type",
+  "Name": "Name",
+  "Tags": {
+    "one": "Tag",
+    "other": "Tags"
+  },
+  "Sale": "Sale",
+  "Purchase": "Purchase",
+  "Price: {{ price }} coin": "Price: {{ price }} $"
+}

@@ -20,7 +20,7 @@ database.once('open', async () => {
         price: 150,
         sale: false,
         image: '/images/samplead1.png',
-        tags: ['motor', 'work'],
+        tags: ['motor'],
       },
     ]);
 

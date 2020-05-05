@@ -1,0 +1,13 @@
+{
+  "locale_name": "Español",
+  "Post your ads": "Envia tus anuncios",
+  "Type": "Tipo",
+  "Name": "Nombre",
+  "Tags": {
+    "one": "Etiqueta",
+    "other": "Etiquetas"
+  },
+  "Sale": "Venta",
+  "Purchase": "Compra",
+  "Price: {{ price }} coin": "Price: {{ price }} €"
+}
