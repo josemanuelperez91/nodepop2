@@ -4,7 +4,7 @@
   "description": "",
   "main": "thumbnail.js",
   "scripts": {
-    "start": "node --use_strict thumbnail.js"
+    "start": "nodemon --use_strict thumbnailService.js"
   },
   "keywords": [],
   "author": "",

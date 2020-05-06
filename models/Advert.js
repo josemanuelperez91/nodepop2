@@ -6,7 +6,6 @@ const advertSchema = mongoose.Schema({
   sale: { type: Boolean, index: true },
   image: String,
   tags: { type: [String], index: true },
-  thumb: String,
 });
 
 advertSchema.statics.queryDocs = function (filter, search, pagination, sort) {
