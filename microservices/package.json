@@ -1,0 +1,17 @@
+{
+  "name": "microservices",
+  "version": "1.0.0",
+  "description": "",
+  "main": "thumbnail.js",
+  "scripts": {
+    "start": "node --use_strict thumbnail.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cote": "^1.0.0",
+    "jimp": "^0.10.3",
+    "path": "^0.12.7"
+  }
+}

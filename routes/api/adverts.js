@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { query, check, validationResult } = require('express-validator');
 const Advert = require('../../models/Advert');
-const imageUploader = require('../../lib/imageUploader');
+const imageHandler = require('../../lib/imageHandler');
 
 router.get(
   '/',
@@ -77,7 +77,7 @@ router.post(
         }
       }),
   ],
-  imageUploader(),
+  imageHandler(),
   async (req, res, next) => {
     try {
       validationResult(req).throw();
