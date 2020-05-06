@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const { query, check, validationResult } = require('express-validator');
-
 const Advert = require('../../models/Advert');
+const imageUploader = require('../../lib/imageUploader');
 
 router.get(
   '/',
@@ -77,10 +77,10 @@ router.post(
         }
       }),
   ],
+  imageUploader(),
   async (req, res, next) => {
     try {
       validationResult(req).throw();
-
       const advertData = req.body;
       const advertModel = new Advert(advertData);
       const storedAdvert = await advertModel.save();

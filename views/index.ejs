@@ -12,7 +12,7 @@
       <% adverts.forEach(advert => { %>
 
       <div class="advert-card">
-        <img src="<%= advert.image ? advert.image : "/images/emptyad1.png" %>"
+        <img src="/images/<%= advert.image ? advert.image : "emptyad1.png" %>"
         alt="<% advert.name %>" />
         <div class="advert-card-info">
           <h5>

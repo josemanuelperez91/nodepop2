@@ -25,7 +25,9 @@ body h2 {
   gap: 20px;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   justify-items: center;
+  margin-bottom: 60px;
 }
+
 .advert-card {
   width: 100%;
   padding: 10px;
@@ -53,4 +55,20 @@ footer {
   right: 0;
   width: 100%;
   font-size: 0.7rem;
+  background-color: #444444;
+}
+
+footer ul {
+  list-style-type: none;
+}
+footer li {
+  margin: 5px 0px;
+}
+footer :any-link {
+  color: white;
+  text-decoration: none;
+}
+footer :any-link:hover {
+  color: yellow;
+  text-decoration: underline;
 }

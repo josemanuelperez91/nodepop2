@@ -1,8 +1,8 @@
 const router = require('express').Router();
 const Advert = require('../models/Advert');
-const i18ncookieSetter = require('../lib/i18ncookieSetter');
+const i18nCookieSetter = require('../lib/i18nCookieSetter');
 
-router.get('/', i18ncookieSetter(), async function (req, res, next) {
+router.get('/', i18nCookieSetter(), async function (req, res, next) {
   res.locals.title = 'NodePop';
 
   try {
