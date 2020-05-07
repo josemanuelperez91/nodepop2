@@ -6,7 +6,8 @@
     "start": "node --use_strict ./bin/www",
     "dev": "cross-env DEBUG=nodeapi:* NODE_ENV=development nodemon -q --use_strict ./bin/www",
     "seed-db": "node --use_strict seed-db.js",
-    "lint-project": "eslint --ignore-path .gitignore ."
+    "lint-project": "eslint --ignore-path .gitignore .",
+    "test": "jest --forceExit"
   },
   "dependencies": {
     "bcrypt": "^4.0.1",
@@ -26,6 +27,8 @@
     "multer": "^1.4.2"
   },
   "devDependencies": {
-    "eslint": "^6.8.0"
+    "eslint": "^6.8.0",
+    "jest": "^26.0.1",
+    "supertest": "^4.0.2"
   }
 }
