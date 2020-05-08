@@ -10,13 +10,13 @@ to run locally.
 
 Copy or clone this application using Git with:
 
-    git clone https://github.com/josemanuelperez91/nodepop.git
+    git clone https://github.com/josemanuelperez91/nodepop2.git
 
 ## Install
 
 Inside the root folder, use NPM to install the required and development dependecies:
 
-    cd nodepop
+    cd nodepop2
     npm install
 
 ## Development
