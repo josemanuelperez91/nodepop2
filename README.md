@@ -23,6 +23,7 @@ Inside the microservices folder, use NPM to install the required and development
 
     cd microservices
     npm install
+    cd ..
 
 Create a .env file with the same constants as the .dev.env
 
