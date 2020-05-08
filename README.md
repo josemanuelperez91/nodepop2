@@ -21,11 +21,11 @@ Inside the root folder, use NPM to install the required and development dependec
 
 ## Development
 
-This project uses eslint in order to mantain a consistent code. To run a global check you can use the following NPM script
+This project uses eslint in order to mantain a consistent code. To run a global check you can use the following command
 
     npm run lint-project -s
 
-To use lint in a specific file, you can use NPX
+To execute lint in a specific file, you can use NPX
 
     npx eslint [filename]
 
@@ -33,9 +33,17 @@ Or directly:
 
     .\node_modules\.bin\eslint [filename]
 
+## Testing
+
+It is necessary to previously run seed-db script because a user its required to auth this tests. Check [Getting started](#seed) first.
+
+This project employs jest and supertest in order to run end to end tests. Therefore it is only required to execute this command to run all tests.
+
+    npm run test -s
+
 ## Run the App
 
-For running in production mode, execute the script:
+For running in production mode, execute the following command
 
     npm run start
 
@@ -45,9 +53,15 @@ For development mode, execute:
 
 Make sure your MongoDB service is up and ready.
 
-## Getting started
+## Run thumbanail microservice
 
-You can use the following script to generate sample data:
+If you want this app to create thumbnails of the image you upload when [you post a new ad](#post), start the microservice with
+
+    npm run start-ms
+
+## <a name="seed"></a> Getting started
+
+To generate sample data and a test-ready user for authorization, run
 
     npm run seed-db
 
@@ -99,7 +113,7 @@ queries are listed below:
 - **price** (Number-Number): searchs for advertisements with a price between two given numbers, separated by -. It is possible to ommit one number to not limit the search by its side.
 - **tag** (String): searchs for any advertisement that has the given tag name inside its list of tags.
 - **sale** (true or false): searchs for advertisements for sale if true is given, or advertisements for purchase if false is given.
-- **token** (String): a valid json web token provided previously by the app, required in order to access the API data. Check: [Authenticate the App](#auth). Can also be send on the Authorization header
+- **token** (String): a valid json web token provided previously by the app, required in order to access the API data. Check: [Authenticate the App](#auth). Can also be send on the Authorization header.
 
 #### Query keys and values for navigation
 
@@ -129,7 +143,7 @@ queries are listed below:
             "name": "Ad for sale 1",
             "price": 100,
             "sale": true,
-            "image": "/images/samplead1.png",
+            "image": "samplead1.png",
             "__v": 0
         }
     ]
@@ -153,7 +167,7 @@ This request will retrieve every tag used in the stored advertisements, without 
     "work"
     ]
 
-### Creating Advertisement (requires authentication)
+### <a name="seed"></a> Creating Advertisement (requires authentication)
 
 #### Request
 
@@ -165,7 +179,7 @@ This request will retrieve every tag used in the stored advertisements, without 
 - **price** (Number)
 - **tag** (String, Multiple)
 - **sale** (true or false)
-- **image** (String, URL)
+- **image** (File, Must be an image file type)
 - **token** (String): a valid json web token provided previously by the app, required in order to post data to the API. Check: [Authenticate the App](#auth).Can also be send on the Authorization header
 
 #### Sample Request
@@ -218,4 +232,23 @@ In case something goes wrong, you can expect some of these errors
 
     {
         "error": "Not Found"
+    }
+
+### Invalid or missing token
+
+    Status: 401 Unauthorized
+    Content-Type: application/json
+
+    {
+        "error": "jwt not found"
+    }
+
+### Login failed
+
+    Status: 401 Unauthorized
+    Content-Type: application/json
+
+    {
+        "success": false,
+        "error": "Invalid email or password"
     }

@@ -26,7 +26,7 @@ app.use(function (req, res, next) {
 });
 
 // error handler
-app.use(function (err, req, res) {
+app.use(function (err, req, res, next) {
   if (err.array) {
     return res
       .status(422)
@@ -45,6 +45,7 @@ app.use(function (err, req, res) {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
   res.render('error');
+  next();
 });
 
 module.exports = app;
