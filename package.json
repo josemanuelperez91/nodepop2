@@ -7,6 +7,7 @@
     "dev": "cross-env DEBUG=nodeapi:* NODE_ENV=development nodemon -q --use_strict ./bin/www",
     "seed-db": "node --use_strict seed-db.js",
     "lint-project": "eslint --ignore-path .gitignore .",
+    "start-ms": "nodemon --use_strict ./microservices/thumbnailService.js",
     "test": "jest --forceExit"
   },
   "dependencies": {

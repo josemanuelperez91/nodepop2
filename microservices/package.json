@@ -2,10 +2,7 @@
   "name": "microservices",
   "version": "1.0.0",
   "description": "",
-  "main": "thumbnail.js",
-  "scripts": {
-    "start": "nodemon --use_strict thumbnailService.js"
-  },
+  "main": "thumbnailService.js",
   "keywords": [],
   "author": "",
   "license": "ISC",
