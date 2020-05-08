@@ -14,16 +14,10 @@ Copy or clone this application using Git with:
 
 ## Install
 
-Inside the root folder, use NPM to install the required and development dependecies:
+Inside the root folder, use NPM to install the required and development dependecies, alongside the ./microservices folder dependecies:
 
     cd nodepop2
     npm install
-
-Inside the microservices folder, use NPM to install the required and development dependecies:
-
-    cd microservices
-    npm install
-    cd ..
 
 Create a .env file with the same constants as the .dev.env
 
