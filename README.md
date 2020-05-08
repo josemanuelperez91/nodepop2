@@ -19,7 +19,13 @@ Inside the root folder, use NPM to install the required and development dependec
     cd nodepop2
     npm install
 
-Create a .env file with the same constants as the .dev.env, or rename it to make it your .env file
+Create a .env file with the same constants as the .dev.env
+
+    touch .env
+
+or rename it to make it your .env file
+
+    rename  .dev.env  .env
 
 ## Development
 
