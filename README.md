@@ -19,6 +19,11 @@ Inside the root folder, use NPM to install the required and development dependec
     cd nodepop2
     npm install
 
+Inside the microservices folder, use NPM to install the required and development dependecies:
+
+    cd microservices
+    npm install
+
 Create a .env file with the same constants as the .dev.env
 
     touch .env
