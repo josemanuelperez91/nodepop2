@@ -19,6 +19,8 @@ Inside the root folder, use NPM to install the required and development dependec
     cd nodepop2
     npm install
 
+Create a .env file with the same constants as the .dev.env, or rename it to make it your .env file
+
 ## Development
 
 This project uses eslint in order to mantain a consistent code. To run a global check you can use the following command

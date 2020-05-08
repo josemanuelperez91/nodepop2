@@ -5,7 +5,10 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var app = express();
 app.use(cookieParser());
-const i18nConfig = require('./i18nConfig')('en', 'lang');
+const i18nConfig = require('./i18nConfig')(
+  process.env.DEFAULT_LANG,
+  process.env.COOKIE_LANG_NAME
+);
 app.use(i18nConfig.init);
 require('./lib/database');
 
