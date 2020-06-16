@@ -6,16 +6,6 @@ This Express application requires [nodejs (12.14.1 or later)](https://nodejs.org
 and [mongoDB (4.2.3 or later)](https://www.mongodb.com/download-center)
 to run locally.
 
-## URL solución práctica configuración de servidores y despliegue de aplicaciones
-
-### Backend con Node
-
-    ec2-18-132-212-41.eu-west-2.compute.amazonaws.com
-
-### React Avanzado
-
-    18.132.212.41
-
 ## Download
 
 Copy or clone this application using Git with:
