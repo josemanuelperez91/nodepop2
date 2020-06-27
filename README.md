@@ -21,9 +21,9 @@ Inside the root folder, use NPM to install the required and development dependec
 
 Create a .env file with the same constants as the .dev.env
 
-    touch .env
+    cp .dev.env .env
 
-or rename it to make it your .env file
+or rename it to make your own .env file
 
     rename  .dev.env  .env
 
