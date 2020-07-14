@@ -4,6 +4,18 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var app = express();
+var cors = require('cors');
+var cookieParser = require('cookie-parser');
+
+app.use(cookieParser());
+
+var corsOptions = {
+  origin: 'http://localhost:3001',
+  optionsSuccessStatus: 200,
+  credentials: true,
+};
+app.use(cors(corsOptions));
+
 app.use(cookieParser());
 const i18nConfig = require('./i18nConfig')(
   process.env.DEFAULT_LANG,

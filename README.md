@@ -91,14 +91,14 @@ queries are listed below:
 
 #### Query keys and values
 
-- **email** (String): unique email from the user.
+- **username** (String): unique username from the user.
 - **password** (String): private password from the user.
 
 #### Sample Request
 
     POST /api/authenticate HTTP/1.1
     Content-Type: application/x-www-form-urlencoded
-    email=user@example.com&password=1234
+    username=user@example.com&password=1234
 
 #### Sample Response
 
@@ -258,5 +258,5 @@ In case something goes wrong, you can expect some of these errors
 
     {
         "success": false,
-        "error": "Invalid email or password"
+        "error": "Invalid username or password"
     }

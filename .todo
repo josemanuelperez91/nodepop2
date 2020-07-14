@@ -1,0 +1,5 @@
+./app.js
+    abstraer en local / producción la corsOptions
+
+./routes/api/login.js
+    añadir secure: true a la configuración de las cookies para ver si cuela

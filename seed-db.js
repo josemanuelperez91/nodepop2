@@ -27,7 +27,7 @@ database.once('open', async () => {
     await User.deleteMany();
     await User.insertMany([
       {
-        email: 'user@example.com',
+        username: 'user@example.com',
         password: await User.hashPassword('1234'),
       },
     ]);

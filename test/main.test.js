@@ -14,7 +14,7 @@ describe('API', function () {
     const res = await request(app)
       .post('/api/authenticate')
       .send({
-        email: 'user@example.com',
+        username: 'user@example.com',
         password: '1234',
       })
       .expect('Content-Type', /json/)
