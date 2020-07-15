@@ -28,7 +28,7 @@ router.post(
         expiresIn: process.env.JWT_EXPIRATION_TIME,
       });
       res.cookie('token', token, {
-        // secure: true,
+        httpOnly: true,
       });
       res.status(200).json({ success: true });
     } catch (err) {
