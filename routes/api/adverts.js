@@ -4,6 +4,27 @@ const { query, check, validationResult } = require('express-validator');
 const Advert = require('../../models/Advert');
 const imageHandler = require('../../lib/imageHandler');
 
+router.get('/:uri', async (req, res, next) => {
+  try {
+    validationResult(req).throw();
+
+    console.log(req.params);
+    const { uri } = req.params;
+    const id = str.split('-')[0];
+
+    // const filter = {};
+    // typeof tag !== 'undefined' && (filter.tags = tag);
+    // typeof sale !== 'undefined' && (filter.sale = sale === 'true');
+    // const search = { name, price };
+    // const pagination = { skip, limit };
+
+    // const docs = await Advert.queryDocs(filter, search, pagination, sort);
+    res.json({ success: true });
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.get(
   '/',
   [

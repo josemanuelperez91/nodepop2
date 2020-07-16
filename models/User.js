@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const userSchema = mongoose.Schema({
   username: { type: String, unique: true },
   password: String,
+  email: { type: String, unique: true },
 });
 
 userSchema.statics.hashPassword = function (plainPassword) {
