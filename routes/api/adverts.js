@@ -3,23 +3,16 @@ const router = express.Router();
 const { query, check, validationResult } = require('express-validator');
 const Advert = require('../../models/Advert');
 const imageHandler = require('../../lib/imageHandler');
+const jwtAuth = require('../../lib/jwtAuth');
 
 router.get('/:uri', async (req, res, next) => {
   try {
     validationResult(req).throw();
 
-    console.log(req.params);
     const { uri } = req.params;
-    const id = str.split('-')[0];
-
-    // const filter = {};
-    // typeof tag !== 'undefined' && (filter.tags = tag);
-    // typeof sale !== 'undefined' && (filter.sale = sale === 'true');
-    // const search = { name, price };
-    // const pagination = { skip, limit };
-
-    // const docs = await Advert.queryDocs(filter, search, pagination, sort);
-    res.json({ success: true });
+    const id = uri.split('-')[0];
+    const doc = await Advert.findById({ _id: id });
+    res.status(200).json({ result: doc });
   } catch (err) {
     next(err);
   }
@@ -61,10 +54,12 @@ router.get(
     try {
       validationResult(req).throw();
 
-      const { tag, sale, name, price, skip, limit, sort } = req.query;
+      const { tag, sale, name, price, skip, limit, sort, username } = req.query;
 
       const filter = {};
+
       typeof tag !== 'undefined' && (filter.tags = tag);
+      typeof username !== 'undefined' && (filter.username = username);
       typeof sale !== 'undefined' && (filter.sale = sale === 'true');
       const search = { name, price };
       const pagination = { skip, limit };
@@ -79,6 +74,7 @@ router.get(
 
 router.post(
   '/',
+  jwtAuth(),
   [
     check('sale').optional().isBoolean(),
     check('price').optional().isNumeric(),

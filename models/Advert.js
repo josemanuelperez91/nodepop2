@@ -1,14 +1,20 @@
 const mongoose = require('mongoose');
 
 const advertSchema = mongoose.Schema({
-  name: { type: String, index: true },
-  price: { type: Number, index: true },
-  sale: { type: Boolean, index: true },
+  name: { type: String, index: true, required: 'Title is required' },
+  price: { type: Number, index: true, required: 'Price is required' },
+  sale: { type: Boolean, index: true, required: 'Type of Ad is required' },
   image: String,
   tags: { type: [String], index: true },
+  username: { type: String, index: true, required: 'Username is required' },
+  last_update: {
+    type: Date,
+    default: Date.now,
+    required: 'Date must be created',
+  },
 });
 
-advertSchema.statics.queryDocs = function (filter, search, pagination, sort) {
+advertSchema.statics.queryDocs = function (filter, search, pagination) {
   const query = this.find(filter);
 
   search.name && query.regex('name', new RegExp(`^${search.name}`, 'i'));
@@ -22,7 +28,7 @@ advertSchema.statics.queryDocs = function (filter, search, pagination, sort) {
   }
   pagination.skip && query.skip(parseInt(pagination.skip));
   pagination.limit && query.limit(parseInt(pagination.limit));
-  sort && query.sort(sort);
+  query.sort({ last_update: 'desc' });
 
   return query.exec();
 };
@@ -30,6 +36,7 @@ advertSchema.statics.queryTags = function () {
   const query = this.find().distinct('tags');
   return query.exec();
 };
+
 const Advert = mongoose.model('Advert', advertSchema);
 
 module.exports = Advert;

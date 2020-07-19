@@ -12,15 +12,17 @@ database.once('open', async () => {
         name: 'Ad for sale 1',
         price: 100,
         sale: true,
-        image: 'samplead1.png',
+        image: 'http://localhost:3000/images/samplead1.png',
         tags: ['work', 'lifestyle'],
+        username: 'user',
       },
       {
         name: 'Ad for purchase 1',
         price: 150,
         sale: false,
-        image: 'samplead1.png',
+        image: 'http://localhost:3000/images/samplead1.png',
         tags: ['motor'],
+        username: 'user2',
       },
     ]);
 

@@ -8,7 +8,7 @@ var cors = require('cors');
 var cookieParser = require('cookie-parser');
 
 app.use(cookieParser());
-
+//localhost
 var corsOptions = {
   origin: 'http://localhost:3001',
   optionsSuccessStatus: 200,
