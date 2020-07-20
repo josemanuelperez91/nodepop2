@@ -4,6 +4,7 @@ const { query, check, validationResult } = require('express-validator');
 const Advert = require('../../models/Advert');
 const imageHandler = require('../../lib/imageHandler');
 const jwtAuth = require('../../lib/jwtAuth');
+const fs = require('fs');
 
 router.get('/:uri', async (req, res, next) => {
   try {
@@ -78,23 +79,10 @@ router.post(
   [
     check('sale').optional().isBoolean(),
     check('price').optional().isNumeric(),
-    check('skip').optional().isInt(),
-    check('limit').optional().isInt(),
-    check('tag')
-      .optional()
-      .custom((value) => {
-        switch (value) {
-          case 'work':
-          case 'lifestyle':
-          case 'motor':
-          case 'mobile':
-            return true;
-          default:
-            throw new Error('Invalid Tag name');
-        }
-      }),
+    check('name').exists(),
+    check('description').exists(),
   ],
-  imageHandler(),
+  // imageHandler(),
   async (req, res, next) => {
     try {
       validationResult(req).throw();
@@ -102,6 +90,35 @@ router.post(
       const advertModel = new Advert(advertData);
       const storedAdvert = await advertModel.save();
       res.status(201).json({ result: storedAdvert });
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
+router.put(
+  '/:id',
+  jwtAuth(),
+  [
+    check('sale').isBoolean(),
+    check('price').isNumeric(),
+    check('name').exists(),
+    check('description').exists(),
+  ],
+  imageHandler(),
+  async (req, res, next) => {
+    try {
+      validationResult(req).throw();
+      const { id } = req.params;
+      const advertData = req.body;
+
+      // let buff = new Buffer(advertData.image, 'base64');
+      // fs.writeFileSync('./public/images/' + id, buff);
+      // advertData.image = `http://localhost:3000/images/${id}`;
+
+      await Advert.findByIdAndUpdate({ _id: id }, advertData);
+
+      res.status(204).json({ success: true });
     } catch (err) {
       next(err);
     }

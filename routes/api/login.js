@@ -30,7 +30,7 @@ router.post(
       res.cookie('token', token, {
         httpOnly: true,
       });
-      res.status(200).json({ success: true });
+      res.status(204).json({ success: true });
     } catch (err) {
       next(err);
     }

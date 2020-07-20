@@ -28,7 +28,7 @@ router.post(
         }
         console.log(err);
       }
-      res.status(200).json({ success: true });
+      res.status(204).json({ success: true });
     } catch (err) {
       next(err);
     }

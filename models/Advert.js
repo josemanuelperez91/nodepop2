@@ -12,6 +12,7 @@ const advertSchema = mongoose.Schema({
     default: Date.now,
     required: 'Date must be created',
   },
+  description: String,
 });
 
 advertSchema.statics.queryDocs = function (filter, search, pagination) {
