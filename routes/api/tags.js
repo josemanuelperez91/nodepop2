@@ -5,7 +5,15 @@ const Advert = require('../../models/Advert');
 
 router.get('/', async (req, res, next) => {
   try {
-    const tags = await Advert.queryTags();
+    const { all } = req.body;
+    let tags = [];
+
+    if (all !== true) {
+      // Should be stored in database
+      tags = ['RPG', 'FPS', 'Adventure', 'Casual', 'Puzzle', 'Racing'];
+    } else {
+      tags = await Advert.queryTags();
+    }
     res.json(tags);
   } catch (err) {
     next(err);

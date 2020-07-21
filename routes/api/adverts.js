@@ -2,9 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { query, check, validationResult } = require('express-validator');
 const Advert = require('../../models/Advert');
-const imageHandler = require('../../lib/imageHandler');
 const jwtAuth = require('../../lib/jwtAuth');
-const fs = require('fs');
 
 router.get('/:uri', async (req, res, next) => {
   try {
@@ -37,19 +35,6 @@ router.get(
       }),
     query('skip').optional().isInt(),
     query('limit').optional().isInt(),
-    query('tag')
-      .optional()
-      .custom((value) => {
-        switch (value) {
-          case 'work':
-          case 'lifestyle':
-          case 'motor':
-          case 'mobile':
-            return true;
-          default:
-            throw new Error('Invalid Tag name');
-        }
-      }),
   ],
   async (req, res, next) => {
     try {
@@ -105,7 +90,6 @@ router.put(
     check('name').exists(),
     check('description').exists(),
   ],
-  imageHandler(),
   async (req, res, next) => {
     try {
       validationResult(req).throw();
@@ -124,5 +108,15 @@ router.put(
     }
   }
 );
+router.delete('/:id', jwtAuth(), async (req, res, next) => {
+  try {
+    validationResult(req).throw();
+    const { id } = req.params;
 
+    await Advert.find({ _id: id }).remove();
+    res.status(204).json({ success: true });
+  } catch (err) {
+    next(err);
+  }
+});
 module.exports = router;

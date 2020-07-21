@@ -13,7 +13,7 @@ database.once('open', async () => {
         price: 100,
         sale: true,
         image: 'http://localhost:3000/images/samplead1.png',
-        tags: ['work', 'lifestyle'],
+        tags: ['RPG', 'Puzzle'],
         username: 'user',
       },
       {
@@ -21,7 +21,7 @@ database.once('open', async () => {
         price: 150,
         sale: false,
         image: 'http://localhost:3000/images/samplead1.png',
-        tags: ['motor'],
+        tags: ['Adventure'],
         username: 'user2',
       },
     ]);
