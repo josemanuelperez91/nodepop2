@@ -5,10 +5,10 @@ const Advert = require('../../models/Advert');
 
 router.get('/', async (req, res, next) => {
   try {
-    const { all } = req.body;
+    const { all } = req.query;
     let tags = [];
 
-    if (all !== true) {
+    if (all === 'true') {
       // Should be stored in database
       tags = ['RPG', 'FPS', 'Adventure', 'Casual', 'Puzzle', 'Racing'];
     } else {
