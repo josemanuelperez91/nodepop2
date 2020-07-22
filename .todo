@@ -1,12 +1,2 @@
-./app.js
-    abstraer en local / producción la corsOptions
 
-./routes/api/login.js
-    añadir secure: true a la configuración de las cookies para ver si cuela
 
-./ mail para recuperar contraseña https://es.mailjet.com/email-api/
-sería asi: recibes mail,  guardas en mongodb la petición,
-mandas mail con api de mailjet al email con link en el mensaje (usar _id de entrada como parametro).
-recibes enlace con link de recuperación, compruebas que el enlace es válido con _id = _id,
-si vale devolver ssr con formulario simple, si no enviar ssr con mensaje.
-al recibir el formulario con pass e id de petición, cambiar pass y borrar petición. 

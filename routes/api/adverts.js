@@ -96,10 +96,6 @@ router.put(
       const { id } = req.params;
       const advertData = req.body;
 
-      // let buff = new Buffer(advertData.image, 'base64');
-      // fs.writeFileSync('./public/images/' + id, buff);
-      // advertData.image = `http://localhost:3000/images/${id}`;
-
       await Advert.findByIdAndUpdate({ _id: id }, advertData);
 
       res.status(204).json({ success: true });

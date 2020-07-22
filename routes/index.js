@@ -19,7 +19,7 @@ router.get('/', i18nCookieSetter(), async function (req, res, next) {
   } catch (err) {
     next(err);
   }
-  res.render('index');
+  //res.render('index');
 });
 
 router.use('/api', require('./api'));
